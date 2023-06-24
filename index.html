@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My API Use</title>
+    <style>
+        ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 1rem;
+            list-style: none;
+            padding: 12px;
+            margin: 0;
+            width: 100%;
+        }
+
+        li {
+            background-color: #fff;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        li:hover {
+            transform: translateY(-0.25rem);
+        }
+        img {
+            width: 100%;
+            height: 300px; 
+            padding: 0px;  
+        }
+
+        h4 {
+            margin: 0.5rem;
+        }
+        .settining_it{
+            background-image: url('./back6.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="moviesContainer" class="settining_it"></div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api/movies/';
+
+        async function fetchMovies() {
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            return data.movies;
+        }
+
+        fetchMovies().then(movies => {
+            let str = '<ul class="grid">';
+            for (i = 0; i < movies.length; i++) {
+                console.log(movies[i]);
+                str += '<li>';
+                str += '<img src="' + movies[i].thumbnail + '">';
+                str += '<h4>' + movies[i].name + '</h4>';
+                str += '</li>';
+            }
+            str += '</ul>';
+            document.getElementById("moviesContainer").innerHTML = str;
+        });
+
+
+    </script>
+</body>
+
+</html>
